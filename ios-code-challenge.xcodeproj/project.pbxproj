@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		38941C1323FBB8AC00ECB10A /* NXTBusinessTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38941C1223FBB8AC00ECB10A /* NXTBusinessTableViewCell.swift */; };
 		6E2812E89D1BFA7A84C8E1EA /* libPods-ios-code-challengeUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE926015E1B4191E0337FDF0 /* libPods-ios-code-challengeUITests.a */; };
 		8A0DD630BF6711D94ACCFDB6 /* libPods-ios-code-challenge.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E98E17AF5F4AF737558F432A /* libPods-ios-code-challenge.a */; };
 		8DC8B21A22A1764500CA0435 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC8B21922A1764500CA0435 /* DetailViewController.swift */; };
@@ -25,9 +26,7 @@
 		C5CEF1CA2014DB71009D1571 /* YLPSearchQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C5CEF1C92014DB71009D1571 /* YLPSearchQuery.m */; };
 		C5CEF1CD2014DC36009D1571 /* YLPSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = C5CEF1CC2014DC36009D1571 /* YLPSearch.m */; };
 		C5CEF1D02014E1FD009D1571 /* YLPBusiness.m in Sources */ = {isa = PBXBuildFile; fileRef = C5CEF1CF2014E1FD009D1571 /* YLPBusiness.m */; };
-		C5CEF1D52015350A009D1571 /* NXTBusinessTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5CEF1D32015350A009D1571 /* NXTBusinessTableViewCell.m */; };
 		C5CEF1D62015350A009D1571 /* NXTBusinessTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5CEF1D42015350A009D1571 /* NXTBusinessTableViewCell.xib */; };
-		C5CEF1D92015354C009D1571 /* NXTBusinessTableViewCell+YLPBusiness.m in Sources */ = {isa = PBXBuildFile; fileRef = C5CEF1D82015354C009D1571 /* NXTBusinessTableViewCell+YLPBusiness.m */; };
 		C5CEF1DC20153618009D1571 /* YLPBusiness+CellForObject.m in Sources */ = {isa = PBXBuildFile; fileRef = C5CEF1DB20153618009D1571 /* YLPBusiness+CellForObject.m */; };
 /* End PBXBuildFile section */
 
@@ -52,6 +51,7 @@
 		1DC1487711F1149F53D5338A /* Pods-ios-code-challenge.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-code-challenge.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ios-code-challenge/Pods-ios-code-challenge.debug.xcconfig"; sourceTree = "<group>"; };
 		275806907CEFEB997DE97372 /* libPods-ios-code-challengeTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ios-code-challengeTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		37E8D328D1CC85C059C348C9 /* Pods-ios-code-challengeUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-code-challengeUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ios-code-challengeUITests/Pods-ios-code-challengeUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		38941C1223FBB8AC00ECB10A /* NXTBusinessTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NXTBusinessTableViewCell.swift; sourceTree = "<group>"; };
 		530F4154A37BD7FC8C59DF2E /* Pods-ios-code-challengeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-code-challengeTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ios-code-challengeTests/Pods-ios-code-challengeTests.release.xcconfig"; sourceTree = "<group>"; };
 		8DC8B21822A1764400CA0435 /* ios-code-challenge-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ios-code-challenge-Bridging-Header.h"; sourceTree = "<group>"; };
 		8DC8B21922A1764500CA0435 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
@@ -86,11 +86,7 @@
 		C5CEF1CC2014DC36009D1571 /* YLPSearch.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLPSearch.m; sourceTree = "<group>"; };
 		C5CEF1CE2014E1FD009D1571 /* YLPBusiness.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLPBusiness.h; sourceTree = "<group>"; };
 		C5CEF1CF2014E1FD009D1571 /* YLPBusiness.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLPBusiness.m; sourceTree = "<group>"; };
-		C5CEF1D22015350A009D1571 /* NXTBusinessTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NXTBusinessTableViewCell.h; sourceTree = "<group>"; };
-		C5CEF1D32015350A009D1571 /* NXTBusinessTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NXTBusinessTableViewCell.m; sourceTree = "<group>"; };
 		C5CEF1D42015350A009D1571 /* NXTBusinessTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NXTBusinessTableViewCell.xib; sourceTree = "<group>"; };
-		C5CEF1D72015354C009D1571 /* NXTBusinessTableViewCell+YLPBusiness.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NXTBusinessTableViewCell+YLPBusiness.h"; sourceTree = "<group>"; };
-		C5CEF1D82015354C009D1571 /* NXTBusinessTableViewCell+YLPBusiness.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NXTBusinessTableViewCell+YLPBusiness.m"; sourceTree = "<group>"; };
 		C5CEF1DA20153618009D1571 /* YLPBusiness+CellForObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "YLPBusiness+CellForObject.h"; sourceTree = "<group>"; };
 		C5CEF1DB20153618009D1571 /* YLPBusiness+CellForObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "YLPBusiness+CellForObject.m"; sourceTree = "<group>"; };
 		E98E17AF5F4AF737558F432A /* libPods-ios-code-challenge.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ios-code-challenge.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -258,11 +254,8 @@
 		C5CEF1D1201534CD009D1571 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				C5CEF1D22015350A009D1571 /* NXTBusinessTableViewCell.h */,
-				C5CEF1D32015350A009D1571 /* NXTBusinessTableViewCell.m */,
 				C5CEF1D42015350A009D1571 /* NXTBusinessTableViewCell.xib */,
-				C5CEF1D72015354C009D1571 /* NXTBusinessTableViewCell+YLPBusiness.h */,
-				C5CEF1D82015354C009D1571 /* NXTBusinessTableViewCell+YLPBusiness.m */,
+				38941C1223FBB8AC00ECB10A /* NXTBusinessTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -463,13 +456,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5CEF1832013F25A009D1571 /* AppDelegate.m in Sources */,
-				C5CEF1D92015354C009D1571 /* NXTBusinessTableViewCell+YLPBusiness.m in Sources */,
 				C5CEF1942013F25A009D1571 /* main.m in Sources */,
 				C5CEF1CD2014DC36009D1571 /* YLPSearch.m in Sources */,
+				38941C1323FBB8AC00ECB10A /* NXTBusinessTableViewCell.swift in Sources */,
 				C5CEF1B92014411C009D1571 /* NXTDataSource.m in Sources */,
 				8DC8B22C22A186E000CA0435 /* MasterViewController.swift in Sources */,
 				C5CEF1D02014E1FD009D1571 /* YLPBusiness.m in Sources */,
-				C5CEF1D52015350A009D1571 /* NXTBusinessTableViewCell.m in Sources */,
 				8DC8B21A22A1764500CA0435 /* DetailViewController.swift in Sources */,
 				C5CEF1CA2014DB71009D1571 /* YLPSearchQuery.m in Sources */,
 				C5CEF1DC20153618009D1571 /* YLPBusiness+CellForObject.m in Sources */,

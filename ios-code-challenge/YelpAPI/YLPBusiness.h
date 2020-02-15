@@ -24,6 +24,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, readonly, copy) NSString *name;
 
+@property (nonatomic, readonly, copy) NSString *price;
+
 @end
 
 NS_ASSUME_NONNULL_END
