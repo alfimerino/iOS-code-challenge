@@ -24,5 +24,6 @@
 @property (nonatomic, copy) void(^tableViewDidSelectCell)(id object);
 @property (nonatomic, copy) void(^tableViewDidSelectAccessoryView)(id object);
 @property (nonatomic, copy) void(^tableViewDidScroll)(void);
+@property (nonatomic, copy) void(^tableViewWillDisplay)(id indexPath);
     
 @end

@@ -8,3 +8,6 @@
 #import "AFYelpAPIClient+Search.h"
 #import "YLPSearch.h"
 #import "YLPBusiness.h"
+#import "NXTBindingDataForObjectDelegate.h"
+
+

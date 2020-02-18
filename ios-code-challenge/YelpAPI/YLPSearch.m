@@ -16,6 +16,7 @@
     if (self = [super init]) {
         _total = [attributes[@"total"] unsignedIntegerValue];
         _businesses = [self.class businessesFromJSONArray:attributes[@"businesses"]];
+        
     }
     
     return self;

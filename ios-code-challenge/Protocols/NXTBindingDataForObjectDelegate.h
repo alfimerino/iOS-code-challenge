@@ -10,9 +10,9 @@
 
 @protocol NXTBindingDataForObjectDelegate <NSObject>
     
-- (void)bindingDataForObject:(id)object;
+- (void)bindingDataForObject:(id _Nonnull)object;
     
 @optional
-- (void)willDisplayCellForObject:(id)object;
+- (void)willDisplayCellForObject:(id _Nonnull)object;
     
 @end
