@@ -35,6 +35,12 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, assign) double radiusFilter;
 
+@property (nonatomic, assign) int limit;
+
+@property (nonatomic, assign) NSString *sortBy;
+
+@property (nonatomic, assign) int offset;
+
 @end
 
 NS_ASSUME_NONNULL_END

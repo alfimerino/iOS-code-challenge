@@ -9,6 +9,7 @@
 #import "NXTDataSource.h"
 #import "NXTCellForObjectDelegate.h"
 #import "NXTBindingDataForObjectDelegate.h"
+#import "ios_code_challenge-Swift.h"
 
 @interface NXTDataSource()
 
@@ -63,6 +64,8 @@
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView willDisplayCell:(id<NXTBindingDataForObjectDelegate>)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    self.tableViewWillDisplay(indexPath);
+
     if([cell respondsToSelector:@selector(willDisplayCellForObject:)]) {
         id<NXTCellForObjectDelegate> object = self.mutableObjects[indexPath.row];
         
