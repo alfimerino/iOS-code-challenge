@@ -61,7 +61,7 @@ class DetailViewController: UIViewController {
     private func configureView() {
         guard let detailItem = detailItem else { return }
         
-//        businessImageView.image = detailItem.image
+        businessImageView.image = detailItem.image
         nameLabel.text = detailItem.name
         ratingImageView.image = UIImage(named: detailItem.ratingImageName) //See ratingImageName in YLPBusiness+Additions.swift
         reviewCountLabel.text = "\(detailItem.reviewCount) Reviews"
