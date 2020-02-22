@@ -7,21 +7,11 @@
 //
 
 import UIKit
-import CoreLocation
 import MapKit
 
-class MasterViewController: UITableViewController, LocationUpdatesDelegate {
+class MasterViewController: UITableViewController{
 
     var detailViewController: DetailViewController?
-    var thisAddress: String? = ""
-
-    var address: Address? = nil {
-        willSet {
-            thisAddress = newValue?.toString()
-        }
-    }
-
-    var locationHelper: LocationHelper?
 
     private lazy var query: YLPSearchQuery = {
         let query = YLPSearchQuery(location: "NYC")
@@ -65,14 +55,6 @@ class MasterViewController: UITableViewController, LocationUpdatesDelegate {
         return dataSource
     }()
 
-    override func viewWillAppear(_ animated: Bool) {
-        locationHelper = LocationHelper()
-        locationHelper?.locationUpdatesDelegate = self
-    }
-
-
-
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -81,15 +63,6 @@ class MasterViewController: UITableViewController, LocationUpdatesDelegate {
         tableView.dataSource = dataSource
         tableView.delegate = dataSource
         configureSearchController()
-
-    }
-
-    func locationUpdated(lat: Double, lon: Double) {
-        locationHelper?.getCoordinateAddress(lat: lat, lon: lon, completion: { (reverseGeocodedAddress) in
-            if reverseGeocodedAddress != nil {
-                self.address = reverseGeocodedAddress
-            }
-        })
     }
 
     /// Fetches the first batch of businesses and loads inital results
@@ -191,24 +164,4 @@ extension MasterViewController: UISearchResultsUpdating, UISearchBarDelegate {
     }
 }
 
-extension MasterViewController: CLLocationManagerDelegate {
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let location = locations.first {
-            print("Found user's location: \(location)")
-        }
-    }
 
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("Failed to find user's location: \(error.localizedDescription)")
-    }
-
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if status == .authorizedAlways {
-            if CLLocationManager.isMonitoringAvailable(for: CLBeaconRegion.self) {
-                if CLLocationManager.isRangingAvailable() {
-                    // do stuff
-                }
-            }
-        }
-    }
-}
