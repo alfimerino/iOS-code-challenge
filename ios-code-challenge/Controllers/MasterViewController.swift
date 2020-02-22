@@ -10,12 +10,21 @@ import UIKit
 import CoreLocation
 import MapKit
 
-class MasterViewController: UITableViewController {
-    
-    var detailViewController: DetailViewController?
+class MasterViewController: UITableViewController, LocationUpdatesDelegate {
 
-    private let query: YLPSearchQuery = {
-        let query = YLPSearchQuery(location: "1201 Parkmoor Ave San Jose")
+    var detailViewController: DetailViewController?
+    var thisAddress: String? = ""
+
+    var address: Address? = nil {
+        willSet {
+            thisAddress = newValue?.toString()
+        }
+    }
+
+    var locationHelper: LocationHelper?
+
+    private lazy var query: YLPSearchQuery = {
+        let query = YLPSearchQuery(location: "NYC")
         query.term = "Burgers"
         query.sortBy = "distance"
         query.limit = 30
@@ -27,13 +36,7 @@ class MasterViewController: UITableViewController {
 
     private var searchTotal = 0
 
-    let locationManager = CLLocationManager()
-    var currentLocation: String = ""
 
-    let geoCoder = CLGeocoder()
-    var address = ""
-
-    // MARK: - Sames
     lazy private var dataSource: NXTDataSource? = {
         guard let dataSource = NXTDataSource(objects: nil) else { return nil }
 
@@ -61,45 +64,37 @@ class MasterViewController: UITableViewController {
 
         return dataSource
     }()
-    //MARK: - Samess
+
+    override func viewWillAppear(_ animated: Bool) {
+        locationHelper = LocationHelper()
+        locationHelper?.locationUpdatesDelegate = self
+    }
+
+
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        checkLocationServices()
-        locationManager.requestLocation()
-        currentLocation = String(describing: locationManager.location)
 
         fetchInitialData()
 
         tableView.dataSource = dataSource
         tableView.delegate = dataSource
         configureSearchController()
-//        currentLocation = reverseGeocoder()
-        guard let location = locationManager.location else { return }
-        geoCoder.reverseGeocodeLocation(location) { [weak self]  ( placemarks, error) in
-                    guard let self = self else { return }
 
-                    if let _ = error {
-                        return
-                    }
+    }
 
-                    guard let placemark = placemarks?.first else {
-                        return
-                    }
-
-                    let streetNumber = placemark.subThoroughfare
-                    let streetName = placemark.thoroughfare
-                    let city = placemark.locality
-
-            self.address = "\(String(describing: streetNumber)) \(String(describing: streetName))"
-                    return
-                }
+    func locationUpdated(lat: Double, lon: Double) {
+        locationHelper?.getCoordinateAddress(lat: lat, lon: lon, completion: { (reverseGeocodedAddress) in
+            if reverseGeocodedAddress != nil {
+                self.address = reverseGeocodedAddress
+            }
+        })
     }
 
     /// Fetches the first batch of businesses and loads inital results
     func fetchInitialData() {
-        AFYelpAPIClient.shared().search(with: query, completionHandler: { [weak self] (searchResult, error) in
-
+        AFYelpAPIClient.shared().search(with: query, completionHandler: { [weak self] (searchResult, error) in //Makes the network call with query.
             guard
                 let strongSelf = self,
                 let result = searchResult
@@ -152,42 +147,6 @@ class MasterViewController: UITableViewController {
         navigationItem.searchController = searchController
     }
 
-
-    func setupLocationManager() {
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-
-    }
-
-    func checkLocationServices() {
-        if CLLocationManager.locationServicesEnabled() {
-            setupLocationManager() // Setup location manager
-            checkLocationAuthorization()
-        } else {
-
-        }
-    }
-
-    func checkLocationAuthorization() {
-        switch CLLocationManager.authorizationStatus() {
-        case .authorizedWhenInUse:
-            locationManager.requestLocation()
-            break
-        case .denied:
-            break
-        case .notDetermined:
-            locationManager.requestWhenInUseAuthorization()
-            break
-        case .restricted:
-
-            break
-        case .authorizedAlways:
-            break
-        }
-    }
-
-
-    
     override func viewDidAppear(_ animated: Bool) {
         self.clearsSelectionOnViewWillAppear = self.splitViewController?.isCollapsed ?? false
         super.viewDidAppear(animated)
@@ -215,81 +174,41 @@ class MasterViewController: UITableViewController {
             controller.setDetailItem(newDetailItem: object)
             controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
             controller.navigationItem.leftItemsSupplementBackButton = true
-
-
         }
-    }
-
-
-
-    func reverseGeocoder(location: CLLocation) -> String{
-        let geoCoder = CLGeocoder()
-        var address = ""
-
-        guard let location = locationManager.location else { return ""}
-
-        geoCoder.reverseGeocodeLocation(location) { [weak self]  ( placemarks, error) in
-            guard let self = self else { return }
-
-            if let _ = error {
-
-                return
-            }
-
-            guard let placemark = placemarks?.first else {
-                return
-            }
-
-            let streetNumber = placemark.subThoroughfare
-            let streetName = placemark.thoroughfare
-//            let city = placemark.locality
-
-            address = "\(String(describing: streetNumber)) \(String(describing: streetName))"
-            return
-        }
-
-        return address
     }
 }
 
-    extension MasterViewController: UISearchResultsUpdating, UISearchBarDelegate {
-        func updateSearchResults(for searchController: UISearchController) {
-            guard let filter = searchController.searchBar.text, !filter.isEmpty else { return }
+extension MasterViewController: UISearchResultsUpdating, UISearchBarDelegate {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let filter = searchController.searchBar.text, !filter.isEmpty else { return }
 
-        }
+    }
 
-        func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-            isSearching = false
-            //        dataSource?.setFilteredObjects(dataSource?.objects)
-            tableView.reloadData()
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        isSearching = false
+        //        dataSource?.setFilteredObjects(dataSource?.objects)
+        tableView.reloadData()
+    }
+}
+
+extension MasterViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.first {
+            print("Found user's location: \(location)")
         }
     }
 
-    extension MasterViewController: CLLocationManagerDelegate {
-        func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-            if let location = locations.first {
-                print("Found user's location: \(location)")
-            }
-        }
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Failed to find user's location: \(error.localizedDescription)")
+    }
 
-        func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-            print("Failed to find user's location: \(error.localizedDescription)")
-        }
-
-        func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-            if status == .authorizedAlways {
-                if CLLocationManager.isMonitoringAvailable(for: CLBeaconRegion.self) {
-                    if CLLocationManager.isRangingAvailable() {
-                        // do stuff
-                    }
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .authorizedAlways {
+            if CLLocationManager.isMonitoringAvailable(for: CLBeaconRegion.self) {
+                if CLLocationManager.isRangingAvailable() {
+                    // do stuff
                 }
             }
         }
+    }
 }
-
-//extension MasterViewController: MKMapViewDelegate {
-//    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-//
-//    }
-//}
-
