@@ -1,6 +1,8 @@
-//import SDWebImage
+/*
 
-@objc(NXTBusinessTableViewCell)
+ */
+
+@objc(NXTBusinessTableViewCell) 
 class NXTBusinessTableViewCell: UITableViewCell {
 
     @IBOutlet weak var businessImageView: UIImageView!
@@ -18,7 +20,7 @@ class NXTBusinessTableViewCell: UITableViewCell {
 
         nameLabel.text = business.name
         let image = UIImage(named: business.ratingImageName) //See ratingImageName in YLPBusiness+Additions.swift
-        ratingImageView.image = image
+        ratingImageView.image = image // Extended YLPBusiness to take an image
         reviewCountLabel.text = "\(business.reviewCount) Reviews"
         distanceLabel.text = "\(business.distanceInMiles)" // See distanceInMiles in YLPBusiness+Additions.swift
         categoriesLabel.text = "\(business.categories.joined(separator: ", "))"

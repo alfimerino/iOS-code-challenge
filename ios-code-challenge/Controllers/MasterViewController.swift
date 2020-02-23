@@ -13,20 +13,19 @@ class MasterViewController: UITableViewController{
 
     var detailViewController: DetailViewController?
 
-    private lazy var query: YLPSearchQuery = {
-        let query = YLPSearchQuery(location: "NYC")
-        query.term = "Burgers"
+    // MARK: - Creates the YLPSearchQuery Object to work with Network call.
+    private let query: YLPSearchQuery = {
+        let query = YLPSearchQuery(location: "San Jose")
+        query.term = "Sandwiches"
         query.sortBy = "distance"
-        query.limit = 30
+//        query.limit = 30
         return query
     }()
 
-    private var isSearching = false
-    private var indexTracker: IndexPath?
+    private var isSearching = false // Status for searchView.
+    private var searchTotal = 0 // Variale to hold total number of businesses found from network call.
 
-    private var searchTotal = 0
-
-
+    // MARK: - Provided NXTDataSource + Additions
     lazy private var dataSource: NXTDataSource? = {
         guard let dataSource = NXTDataSource(objects: nil) else { return nil }
 
@@ -34,12 +33,19 @@ class MasterViewController: UITableViewController{
             guard let strongSelf = self else { return }
             strongSelf.tableView.reloadData()
         }
-
+        /*
+         tableViewDidSelectCell - Used to perform the segue and send the data to the detailVC
+         */
         dataSource.tableViewDidSelectCell = { [weak self] object in
             guard let strongSelf = self else { return }
             strongSelf.performSegue(withIdentifier: "showDetail", sender: object)
         }
-
+        /*
+         tableViewWillDisplay - Used to access lifecycle method that will allow access to indexPath.
+         1. Sets the total number of businesses to the dataSource.
+         2. If the indexPath reaches the 5th last cell, calls fetchNextPage() for the next
+            number of businesses to display.
+        */
         dataSource.tableViewWillDisplay = { [weak self] indexPath in
             if self?.searchTotal == dataSource.objects.count {
                 return
@@ -55,33 +61,56 @@ class MasterViewController: UITableViewController{
         return dataSource
     }()
 
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        fetchInitialData()
+        fetchInitialData() 
 
         tableView.dataSource = dataSource
         tableView.delegate = dataSource
         configureSearchController()
     }
 
-    /// Fetches the first batch of businesses and loads inital results
+    override func viewDidAppear(_ animated: Bool) {
+        self.clearsSelectionOnViewWillAppear = self.splitViewController?.isCollapsed ?? false
+        super.viewDidAppear(animated)
+    }
+
+    // MARK: - fetchInitialData()
+    /*
+     Fetches the first batch of businesses and loads inital results.
+     1. AFYelpAPIClient closure makes the network call and return searchResult and error.
+     2. IF - network call fails, presents error to user.
+     3. ELSE - network call is successfull, searchTotal is set for the total number of businesses found matching the query.
+     4. DataSource is set with the objects fetched from the successful result.
+     5. TableView reloads data with dataSource objects.
+    */
     func fetchInitialData() {
         AFYelpAPIClient.shared().search(with: query, completionHandler: { [weak self] (searchResult, error) in //Makes the network call with query.
             guard
-                let strongSelf = self,
-                let result = searchResult
+                let strongSelf = self, // Added to remove confusion.
+                let result = searchResult // Sets the result to the YLPSearch object.
                 else {
-                    self?.presentError(error)
+                    self?.presentError(error) // Presents error if network call fails.
                     return
             }
 
             strongSelf.searchTotal = Int(result.total)
-            strongSelf.dataSource?.setObjects(result.businesses)
+            strongSelf.dataSource?.setObjects(result.businesses) //Sets the offset number of businesses for the initial search.
             strongSelf.tableView.reloadData()
         })
     }
 
+    // MARK: - fetchNextPage()
+    /*
+     Fetches the next set of businesses from API.
+     1. AFYelpAPIClient closure makes the network call and return searchResult and error.
+     2. IF - network call fails, presents error to user.
+     3. ELSE - network call is successfull, searchTotal is set for the total number of businesses found matching the query.
+     4. DataSource appends objects fetched from the successful result.
+     5. TableView reloads data with dataSource objects.
+    */
     func fetchNextPage() {
         AFYelpAPIClient.shared().search(with: query, completionHandler: { [weak self] (searchResult, error) in
 
@@ -98,6 +127,8 @@ class MasterViewController: UITableViewController{
         })
     }
 
+    //MARK: - presentError()
+    // - Presents UIAlertController if error has occurred in fetchInitialData() or fetchNextPage()
     func presentError(_ error: Error?) {
         let errorMessage = error?.localizedDescription ?? ""
         let alert = UIAlertController(title: "Error",
@@ -118,11 +149,6 @@ class MasterViewController: UITableViewController{
 
         navigationItem.hidesSearchBarWhenScrolling = false
         navigationItem.searchController = searchController
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        self.clearsSelectionOnViewWillAppear = self.splitViewController?.isCollapsed ?? false
-        super.viewDidAppear(animated)
     }
     
     // MARK: - Navigation

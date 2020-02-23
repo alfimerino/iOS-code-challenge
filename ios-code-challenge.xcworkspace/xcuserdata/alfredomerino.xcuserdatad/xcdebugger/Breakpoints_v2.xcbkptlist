@@ -7,16 +7,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "A5CD870D-1C7E-48BE-840D-89EB3CE54581"
+            uuid = "1C270EF9-4A85-4A10-B854-A4E15001E1AD"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ios-code-challenge/Controllers/MasterViewController.swift"
+            filePath = "ios-code-challenge/Cells/NXTBusinessTableViewCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "93"
-            endingLineNumber = "93"
-            landmarkName = "locationUpdated(lat:lon:)"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
+            landmarkName = "bindingData(for:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

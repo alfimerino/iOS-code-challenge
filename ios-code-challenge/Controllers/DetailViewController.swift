@@ -49,13 +49,14 @@ class DetailViewController: UIViewController {
         detailItem = newDetailItem
     }
 
+
+    // Created to display a default placeholder when application loads.
     func placeHolders() {
         businessImageView.image = #imageLiteral(resourceName: "yelpOpaque")
         nameLabel.text = ""
         reviewCountLabel.text = ""
         distanceLabel.text = ""
         categoriesLabel.text = ""
-//        priceImageView.image =
     }
 
     private func configureView() {

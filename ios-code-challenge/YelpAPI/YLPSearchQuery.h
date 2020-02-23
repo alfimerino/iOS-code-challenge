@@ -23,9 +23,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign) int limit;
 
-@property (nonatomic, assign) NSString *sortBy;
+@property (nonatomic, assign) NSString *sortBy; // Added to take in parameter to sort search results by.
 
-@property (nonatomic, assign) int offset;
+@property (nonatomic, assign) int offset; // Added to take in value to offset by.
 
 @end
 
